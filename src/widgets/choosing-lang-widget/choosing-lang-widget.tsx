@@ -9,8 +9,6 @@ export default function ChoosingLangWidget({onClick, activeLang}: ChoosingLangWi
   const langs = ['RU', 'EN'];
   return (
     <div className="lang-widget-container">
-      {/* <span className="lang-text active" >RU</span>
-      <span className="lang-text">EN</span> */}
       {
         langs.map((lang) => <span key={lang}
         className={`lang-text ${lang === activeLang ? 'active' : ''}`}

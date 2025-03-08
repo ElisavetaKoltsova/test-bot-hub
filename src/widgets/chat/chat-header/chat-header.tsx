@@ -1,8 +1,9 @@
 import { JSX, useState } from "react";
 import Logo from "../../../shared/icons/logo";
 import LangIcon from "../../../shared/icons/lang-icon";
-import ArrowDownIcon from "../../../shared/icons/arrow-down-icon";
+import ArrowUpIcon from "../../../shared/icons/arrow-up-icon";
 import ChoosingLangWidget from "../../choosing-lang-widget/choosing-lang-widget";
+import ArrowDownIcon from "../../../shared/icons/arrow-down-icon";
 
 export default function ChatHeader(): JSX.Element {
   const [choosingLangStatus, setChoosingLangStatus] = useState(false);
@@ -24,7 +25,9 @@ export default function ChatHeader(): JSX.Element {
           <LangIcon />
           <span>{activeLang}</span>
           <div className="arrow-down-icon-wrapper">
-            <ArrowDownIcon />
+            {
+              choosingLangStatus ? <ArrowDownIcon /> : <ArrowUpIcon />
+            }
           </div>
         </div>
         {
