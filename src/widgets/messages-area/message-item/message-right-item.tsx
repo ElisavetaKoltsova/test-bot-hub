@@ -2,7 +2,12 @@ import { JSX } from "react";
 import CopyIcon from "../../../shared/icons/copy-icon";
 import DefaultAvatar from "../../../shared/default-avatar/default-avatar";
 
-export default function MessageRightItem(): JSX.Element {
+type MessageRightItemProps = {
+  message: string;
+  time: string;
+}
+
+export default function MessageRightItem({message, time}: MessageRightItemProps): JSX.Element {
   return (
     <div className="message-right-item-container">
       <div className="copy-icon-wrapper">
@@ -10,11 +15,11 @@ export default function MessageRightItem(): JSX.Element {
       </div>
       <div className="message-right-body">
         <div className="message-text">
-          <span>Hello!</span>
+          <span>{message}</span>
         </div>
-        <span className="message-time">22:51</span>
+        <span className="message-time">{time}</span>
       </div>
-      <div className="avatar-image-massege-wrapper">
+      <div className="avatar-image-message-wrapper">
         <DefaultAvatar />
       </div>
     </div>
