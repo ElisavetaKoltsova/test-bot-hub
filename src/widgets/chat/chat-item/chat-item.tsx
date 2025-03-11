@@ -2,6 +2,8 @@ import { JSX } from "react";
 import ChatIcon from "../../../shared/icons/chat-icon";
 import TrashIcon from "../../../shared/icons/trash-icon";
 
+
+
 export default function ChatItem(): JSX.Element {
   return (
     <div className="chat-item-container">

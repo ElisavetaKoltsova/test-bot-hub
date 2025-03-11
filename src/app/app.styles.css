@@ -140,19 +140,21 @@
 
 .message-area-section {
   display: flex;
-  flex: 80%;
+  flex: 100%;
   flex-grow: 1;
   background-color: rgba(18, 24, 37, 1);
   height: 100%;
+  width: 100%;
   border-radius: 8px;
   padding: 1%;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 }
 
 .messages-container {
   display: flex;
-  margin-left: 10%;
-  margin-right: 10%;
+  width: 80%;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
