@@ -1,18 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { ChatItem, Message, MessagesResponse } from "../types/chat"
+import { ChatItem, MessagesResponse } from "../types/chat"
 import { AppDispatch, State } from "../types/state"
 import { AxiosInstance } from "axios"
 import { APIRoute, AppRoute } from "../consts"
-import { saveToken, dropToken } from "../services/token"
+import { dropToken } from "../services/token"
 import { AuthData, OAuth, OAuthData } from "../types/auth-data"
-import { User, UserData } from "../types/user-data"
+import { User } from "../types/user-data"
 import { redirectToRoute } from "./action"
 import { ConsentUrl, Provider } from "../types/consent-url"
-import { TOKEN } from "../services/api"
 
 export const APIAction = {
   FETCH_CHAT_LIST: 'chat/list',
   FETCH_CHAT_ITEM_MESSAGES: 'chat/list/messages',
+  CREATE_CHAT: '/chat/new',
   CHECK_AUTH: 'user/checkAuth',
   SINGIN: 'user/singin',
   SINGUP: 'user/singup',
@@ -41,6 +41,19 @@ export const fecthChatItemMessaegsAction = createAsyncThunk<MessagesResponse, {i
   APIAction.FETCH_CHAT_ITEM_MESSAGES,
   async({id}, {extra: api}) => {
     const { data } = await api.get<MessagesResponse>(`${APIRoute.Chat}/${id}${APIRoute.Messages}`);
+    return data;
+  }
+);
+
+export const createNewChatAction = createAsyncThunk<ChatItem[], {name: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.CREATE_CHAT,
+  async({name}, {extra: api}) => {
+    await api.post(APIRoute.Chat, {name: name});
+    const { data: {data} } = await api.get(APIRoute.ChatList);
     return data;
   }
 );
