@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ChatProcess } from "../../types/state";
 import { NameSpace } from "../../consts";
-import { createNewChatAction, fecthChatItemMessaegsAction, fecthChatListAction } from "../api-actions";
+import { createNewChatAction, deleteChatAction, fecthChatItemMessaegsAction, fecthChatListAction } from "../api-actions";
 
 const initialState: ChatProcess = {
   chatItems: [],
@@ -42,6 +42,9 @@ export const chatProcess = createSlice({
       .addCase(createNewChatAction.fulfilled, (state, action) => {
         state.chatItems = action.payload;
         state.isChatItemsDataLoading = false;
+      })
+      .addCase(deleteChatAction.fulfilled, (state, action) => {
+        state.chatItems = action.payload;
       });
   }
 });

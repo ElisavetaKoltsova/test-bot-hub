@@ -2,7 +2,7 @@ import { JSX } from "react";
 import ChatIcon from "../../../shared/icons/chat-icon";
 import TrashIcon from "../../../shared/icons/trash-icon";
 import { useAppDispatch } from "../../../hooks";
-import { fecthChatItemMessaegsAction } from "../../../store/api-actions";
+import { deleteChatAction, fecthChatItemMessaegsAction } from "../../../store/api-actions";
 
 type ChatItemProps = {
   name: string;
@@ -11,9 +11,14 @@ type ChatItemProps = {
 
 export default function ChatItem({name, id}: ChatItemProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   const handleChatItemButtonClick = () => {
     dispatch(fecthChatItemMessaegsAction({id}));
   };
+
+  const handleDeleteButtonClick = () => {
+    dispatch(deleteChatAction({id}));
+  }
 
   return (
     <div className="chat-item-container" data-chat-id={id}>
@@ -23,7 +28,7 @@ export default function ChatItem({name, id}: ChatItemProps): JSX.Element {
         </div>
         <span>{name}</span>
       </div>
-      <div className="trash-icon-wrapper">
+      <div className="trash-icon-wrapper" onClick={handleDeleteButtonClick}>
         <TrashIcon />
       </div>
     </div>

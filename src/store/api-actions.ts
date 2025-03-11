@@ -13,6 +13,7 @@ export const APIAction = {
   FETCH_CHAT_LIST: 'chat/list',
   FETCH_CHAT_ITEM_MESSAGES: 'chat/list/messages',
   CREATE_CHAT: '/chat/new',
+  DELETE_CHAT: '/chat/delete',
   CHECK_AUTH: 'user/checkAuth',
   SINGIN: 'user/singin',
   SINGUP: 'user/singup',
@@ -53,6 +54,19 @@ export const createNewChatAction = createAsyncThunk<ChatItem[], {name: string}, 
   APIAction.CREATE_CHAT,
   async({name}, {extra: api}) => {
     await api.post(APIRoute.Chat, {name: name});
+    const { data: {data} } = await api.get(APIRoute.ChatList);
+    return data;
+  }
+);
+
+export const deleteChatAction = createAsyncThunk<ChatItem[], {id: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.DELETE_CHAT,
+  async({id}, {extra: api}) => {
+    await api.delete(`${APIRoute.Chat}/${id}`);
     const { data: {data} } = await api.get(APIRoute.ChatList);
     return data;
   }
