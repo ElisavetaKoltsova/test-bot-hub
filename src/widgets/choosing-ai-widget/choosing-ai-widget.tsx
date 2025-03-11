@@ -14,7 +14,7 @@ export default function ChoosingAIWidget({activeAI, onClick}: ChoosingAIWidgetPr
       {
         ais.map((ai) => <div key={ai} className={`ai-text-wrapper ${ai === activeAI ? 'active' : ''}`}>
         <div>
-          <GPTIcon />
+          <GPTIcon size={18} />
         </div>
         <span
           className="ai-text"

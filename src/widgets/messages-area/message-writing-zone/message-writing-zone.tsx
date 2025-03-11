@@ -25,7 +25,7 @@ export default function MessageWritingZone(): JSX.Element {
       }
       <div className="ai-name-container" onClick={handleChoosingAIButtonClick}>
         <div className="ai-icon-wrapper">
-          <GPTIcon />
+          <GPTIcon size={18} />
         </div>
         <span>{activeAI}</span>
         <div className="arrow-down-icon-wrapper">

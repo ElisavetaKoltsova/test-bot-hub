@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { ChatItem } from "../types/chat"
+import { ChatItem, Message, MessagesResponse } from "../types/chat"
 import { AppDispatch, State } from "../types/state"
 import { AxiosInstance } from "axios"
 import { APIRoute, AppRoute } from "../consts"
@@ -12,6 +12,7 @@ import { TOKEN } from "../services/api"
 
 export const APIAction = {
   FETCH_CHAT_LIST: 'chat/list',
+  FETCH_CHAT_ITEM_MESSAGES: 'chat/list/messages',
   CHECK_AUTH: 'user/checkAuth',
   SINGIN: 'user/singin',
   SINGUP: 'user/singup',
@@ -27,10 +28,19 @@ export const fecthChatListAction = createAsyncThunk<ChatItem[], undefined, {
 }>(
   APIAction.FETCH_CHAT_LIST,
   async(_arg, {extra: api}) => {
-    const { data } = await api.get<ChatItem[]>(APIRoute.ChatList, { headers: {
-      Authorization: TOKEN,
-      "Content-Type": "application/json"
-    }});
+    const { data: {data} } = await api.get(APIRoute.ChatList);
+    return data;
+  }
+);
+
+export const fecthChatItemMessaegsAction = createAsyncThunk<MessagesResponse, {id: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.FETCH_CHAT_ITEM_MESSAGES,
+  async({id}, {extra: api}) => {
+    const { data } = await api.get<MessagesResponse>(`${APIRoute.Chat}/${id}${APIRoute.Messages}`);
     return data;
   }
 );
@@ -43,11 +53,7 @@ export const fetchOAuthConsentUrlAction = createAsyncThunk<ConsentUrl, Provider,
   APIAction.FETCH_OAUTH_CONSENT_URL,
   async({provider, redirect_uri}, {extra: api}) => {
     const { data } = await api.get<ConsentUrl>(APIRoute.OAuthConsentUrl, {
-      params: { provider, redirect_uri },
-      headers: {
-        Authorization: TOKEN,
-        "Content-Type": "application/json"
-      }
+      params: { provider, redirect_uri }
     });
     return data;
   }
@@ -60,12 +66,7 @@ export const fetchOAuthAction = createAsyncThunk<OAuthData, OAuth, {
 }>(
   APIAction.FETCH_OAUTH,
   async({provider, code, device_id, code_verifier, redirect_uri}, {extra: api}) => {
-    const { data } = await api.post<OAuthData>(APIRoute.OAuth, { provider, code, device_id, code_verifier, redirect_uri }, {
-      headers: {
-        Authorization: code,
-        "Content-Type": "application/json",
-      }
-    });
+    const { data } = await api.post<OAuthData>(APIRoute.OAuth, { provider, code, device_id, code_verifier, redirect_uri });
     return data;
   }
 );
@@ -89,12 +90,7 @@ export const singinAction = createAsyncThunk<User, AuthData, {
 }>(
   APIAction.SINGIN,
   async ({email, password}, {dispatch, extra: api}) => {
-    const {  data } = await api.post<User>(APIRoute.Singin, {email, password}, {
-      headers: {
-        Authorization: TOKEN,
-        "Content-Type": "application/json"
-      }
-    });
+    const {  data } = await api.post<User>(APIRoute.Singin, {email, password});
     // saveToken(token);
     dispatch(redirectToRoute(AppRoute.Chat));
     return data;
@@ -108,12 +104,7 @@ export const singupAction = createAsyncThunk<User, AuthData, {
 }>(
   APIAction.SINGUP,
   async ({email, password}, {dispatch, extra: api}) => {
-    const { data } = await api.post<User>(APIRoute.Singup, {email, password}, {
-      headers: {
-        Authorization: TOKEN,
-        "Content-Type": "application/json"
-      }
-    });
+    const { data } = await api.post<User>(APIRoute.Singup, {email, password});
     // saveToken(token);
     dispatch(redirectToRoute(AppRoute.Chat));
     return data;

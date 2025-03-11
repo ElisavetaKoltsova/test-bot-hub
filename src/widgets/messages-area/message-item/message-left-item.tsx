@@ -9,33 +9,6 @@ type MessageLeftItemProps = {
 
 export default function MessageLeftItem({message, time}: MessageLeftItemProps): JSX.Element {
   return (
-    // <div className="message-left-item-container">
-    //   <div className="ai-model">
-    //     <span className="ai-name">ChatGPT</span>
-    //     <div className="ai-type">
-    //       <span>gpt-3.5-turbo</span>
-    //     </div>
-    //   </div>
-    //   <div className="message-left-body">
-    //     <div className="ai-avatar-wrapper">
-    //       <GPTIcon />
-    //     </div>
-    //     <div className="message-text">
-    //       <span>Left Message</span>
-    //     </div>
-    //   </div>
-    //   <div className="message-left-info">
-    //     <div className="token-cost-wrapper">
-    //       <span className="token-cost">-223 CAPS</span>
-    //       <div>
-    //         <CopyIcon />
-    //       </div>
-    //     </div>
-    //     <div className="message-time-wrapper">
-    //       <span className="message-time">11:29</span>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="message-left-item-container">
       <div className="ai-model">
         <span className="ai-name">ChatGPT</span>
@@ -45,7 +18,7 @@ export default function MessageLeftItem({message, time}: MessageLeftItemProps): 
       </div>
       <div className="message-left-body">
         <div className="ai-avatar-wrapper">
-          <GPTIcon />
+          <GPTIcon size={40} />
         </div>
         <div className="message-content">
           <div className="message-text">

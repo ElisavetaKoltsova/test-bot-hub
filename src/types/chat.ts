@@ -8,3 +8,148 @@ export type ChatItem = {
   model_id:	string;
   created_at:	Date;
 }
+
+export type Message = {
+  id: string;
+  group_id: string;
+  user_id: string;
+  name: string;
+  total_caps: 0;
+  highlight: string;
+  model_id: string;
+  created_at: Date;
+}
+
+export type MessageData = {
+  id: string;
+  role: "assistant" | "user";
+  choiced: boolean;
+  version: number;
+  set_id: string | null;
+  previous_version_id: string | null;
+  next_version_id: string | null;
+  video_id: string | null;
+  action_type: string | null;
+  status: "DONE" | string;
+  model_id: string | null;
+  model_version: string | null;
+  content: string;
+  full_content: string | null;
+  reasoning_content: string;
+  reasoning_time_ms: number | null;
+  search_status: string | null;
+  search_results: string | null;
+  isEncrypted: boolean;
+  additional_content: string | null;
+  chat_id: string;
+  user_id: string;
+  tokens: number;
+  disabled: boolean;
+  created_at: string;
+  transaction_id: string | null;
+  request_id: string | null;
+  voice_id: string | null;
+  job_id: string | null;
+  mj_mode: string | null;
+  platform: string | null;
+  model: {
+    id: string;
+    label: string;
+    description: string | null;
+    icon_id: string | null;
+    pricing: {
+      input: number;
+      output: number;
+      discount: number;
+      input_image: number;
+    };
+    auto_update_pricing: boolean;
+    prefix: string;
+    context_length: number;
+    max_tokens: number;
+    features: string[];
+    provider_id: string;
+    child_provider_id: string | null;
+    owned_by: string;
+    parent_id: string;
+    message_color: string;
+    disabled: boolean;
+    disabledWeb: boolean;
+    disabledTelegram: boolean;
+    order: number;
+    used_count: number;
+    custom: boolean;
+    deleted: boolean;
+    created_at: string;
+    icon: string | null;
+    parent: {
+      id: string;
+      label: string;
+      description: string | null;
+      icon_id: string | null;
+      pricing: null;
+      auto_update_pricing: boolean;
+      prefix: string;
+      context_length: number;
+      max_tokens: number;
+      features: string[];
+      provider_id: string | null;
+      child_provider_id: string | null;
+      owned_by: string;
+      parent_id: string | null;
+      message_color: string;
+      disabled: boolean;
+      disabledWeb: boolean;
+      disabledTelegram: boolean;
+      order: number;
+      used_count: number;
+      custom: boolean;
+      deleted: boolean;
+      created_at: string;
+      icon: string | null;
+    };
+  } | null;
+  transaction: {
+    id: string;
+    provider: string;
+    amount: number;
+    currency: string;
+    meta: string | null;
+    status: "SUCCEDED" | string;
+    type: string;
+    plan_id: string | null;
+    user_id: string;
+    from_user_id: string | null;
+    referral_id: string | null;
+    created_at: string;
+    external_id: string | null;
+    enterprise_id: string | null;
+    deleted: boolean;
+  } | null;
+  set: string | null;
+  images: string[];
+  buttons: string[];
+  all_buttons: string[];
+  attachments: string[];
+  voice: string | null;
+  video: string | null;
+  job: {
+    id: string;
+    name: string;
+    status: "DONE" | string;
+    is_stop_allowed: boolean;
+    timeout: number;
+    progress: number;
+    error: string | null;
+    error_code: string | null;
+    chat_id: string;
+    user_message_id: string | null;
+    mj_native_message_id: string | null;
+    mj_remaining_timeout: string | null;
+    created_at: string;
+  } | null;
+};
+
+export type MessagesResponse = {
+  data: MessageData[];
+};

@@ -1,11 +1,13 @@
 import { AuthorizationStatus } from "../consts";
 import { store } from "../store";
-import { ChatItem } from "./chat";
+import { ChatItem, MessagesResponse } from "./chat";
 import { User } from "./user-data";
 
 export type ChatProcess = {
   chatItems: ChatItem[];
+  messages: MessagesResponse | {data: []};
   isChatItemsDataLoading: boolean;
+  isMessagesDataLoading: boolean;
 }
 
 export type UserProcess = {
