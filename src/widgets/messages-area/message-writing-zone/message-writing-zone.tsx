@@ -1,12 +1,18 @@
-import { JSX, useState } from "react";
+import { JSX, useRef, useState } from "react";
 import GPTIcon from "../../../shared/ai-icons/gpt-icon";
 import ArrowUpIcon from "../../../shared/icons/arrow-up-icon";
 import SendIcon from "../../../shared/icons/send-icon";
 import ChoosingAIWidget from "../../choosing-ai-widget/choosing-ai-widget";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { getCurrentChatId } from "../../../store/chat-process/selectors";
+import { postMessageAction } from "../../../store/api-actions";
 
 export default function MessageWritingZone(): JSX.Element {
   const [choosingAIStatus, setChoosingAIStatus] = useState(false);
   const [activeAI, setActiveAI] = useState('ChatGPT');
+  const inputRef = useRef(null);
+  const chatId = useAppSelector(getCurrentChatId);
+  const dispatch = useAppDispatch();
 
   const handleChoosingAIButtonClick = () => {
     setChoosingAIStatus(!choosingAIStatus);
@@ -14,6 +20,14 @@ export default function MessageWritingZone(): JSX.Element {
 
   const handleChangeAIButtonClick = (ai: string) => {
     setActiveAI(ai);
+  };
+
+  const handleSendButtonClick = () => {
+    const message = (inputRef.current as unknown as HTMLInputElement).value;
+    if (message.length) {
+      dispatch(postMessageAction({chatId, message}));
+      (inputRef.current as unknown as HTMLInputElement).value = '';
+    }
   };
   
   return (
@@ -33,10 +47,10 @@ export default function MessageWritingZone(): JSX.Element {
         </div>
       </div>
       <div className="message-input-container">
-        <input className="message-input" type="text" placeholder="Спроси о чём-нибудь..." />
-        <div className="send-icon-wrapper">
+        <input className="message-input" type="text" placeholder="Спроси о чём-нибудь..." ref={inputRef} />
+        <button className="send-icon-wrapper" onClick={handleSendButtonClick} disabled={chatId === ''}>
           <SendIcon />
-        </div>
+        </button>
       </div>
     </div>
   );

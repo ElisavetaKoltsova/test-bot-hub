@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form";
 import CloseIcon from "../../shared/icons/close-icon";
 import { useAppDispatch } from "../../hooks";
 import { singinUser } from "../../store/user-process/user-process";
-import { redirectToRoute } from "../../store/action";
-import { AppRoute } from "../../consts";
 
 interface FormData {
   email: string;
@@ -19,9 +17,7 @@ export default function LoginPage() {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log("Form Submitted", data);
     dispatch(singinUser(data));
-    dispatch(redirectToRoute(AppRoute.Chat));
   };
 
   return (

@@ -7,6 +7,7 @@ import { APIRoute } from "../consts"
 export const APIAction = {
   FETCH_CHAT_LIST: 'chat/list',
   FETCH_CHAT_ITEM_MESSAGES: 'chat/list/messages',
+  POST_MESSAGE: 'chat/message/send',
   CREATE_CHAT: '/chat/new',
   DELETE_CHAT: '/chat/delete',
   CHECK_AUTH: 'user/checkAuth',
@@ -37,6 +38,19 @@ export const fecthChatItemMessaegsAction = createAsyncThunk<MessagesResponse, {i
   APIAction.FETCH_CHAT_ITEM_MESSAGES,
   async({id}, {extra: api}) => {
     const { data } = await api.get<MessagesResponse>(`${APIRoute.Chat}/${id}${APIRoute.Messages}`);
+    return data;
+  }
+);
+
+export const postMessageAction = createAsyncThunk<MessagesResponse, {chatId: string; message: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.POST_MESSAGE,
+  async({chatId, message}, {extra: api}) => {
+    await api.post(`${APIRoute.Message}${APIRoute.Send}`, {chatId, message});
+    const { data } = await api.get<MessagesResponse>(`${APIRoute.Chat}/${chatId}${APIRoute.Messages}`);
     return data;
   }
 );

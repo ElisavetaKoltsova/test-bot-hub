@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../hooks";
 import { getChatItems, getChatItemsDataLoadingStatus } from "../../../store/chat-process/selectors";
 
 export default function ChatList(): JSX.Element {
-
   const chatItems = useAppSelector(getChatItems);
   const isLoading = useAppSelector(getChatItemsDataLoadingStatus);
 

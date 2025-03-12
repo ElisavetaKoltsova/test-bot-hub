@@ -12,7 +12,9 @@ export enum APIRoute {
   OAuth = '/auth/oauth',
   Chat = '/chat',
   ChatList = '/chat/list',
+  Message = '/message',
   Messages = '/messages',
+  Send = '/send',
   Singin = '/auth/singin',
   Singup = '/auth/singup',
   Exit = '/auth/exit'

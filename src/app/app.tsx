@@ -14,7 +14,7 @@ store.dispatch(fecthChatListAction());
 
 export default function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  console.log(authorizationStatus)
+
   return (
     <div className="app">
       <BrowserRouter>

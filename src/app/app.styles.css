@@ -191,6 +191,14 @@
   border-bottom: 1px solid rgba(34, 43, 68, 1);
 }
 
+.chat-item-container-active {
+  display: flex;
+  justify-content: space-between;
+  height: 38px;
+  align-items: center;
+  border-bottom: 1px solid rgba(34, 43, 68, 1);
+}
+
 .chat-item-info {
   display: flex;
   gap: 8px;
@@ -527,11 +535,18 @@
 .send-icon-wrapper {
   display: flex;
   background-color: rgba(28, 100, 242, 1);
+  border: none;
   border-radius: 8px;
   width: 38px;
   height: 38px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
 }
 
 .copy-icon-wrapper {
