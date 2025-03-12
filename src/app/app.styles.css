@@ -472,6 +472,7 @@
 
 .exit-icon-wrapper {
   align-content: center;
+  cursor: pointer;
 }
 
 .exit-icon {
