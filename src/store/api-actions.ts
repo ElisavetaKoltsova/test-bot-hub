@@ -2,12 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ChatItem, MessagesResponse } from "../types/chat"
 import { AppDispatch, State } from "../types/state"
 import { AxiosInstance } from "axios"
-import { APIRoute, AppRoute } from "../consts"
-import { dropToken } from "../services/token"
-import { AuthData, OAuth, OAuthData } from "../types/auth-data"
-import { User } from "../types/user-data"
-import { redirectToRoute } from "./action"
-import { ConsentUrl, Provider } from "../types/consent-url"
+import { APIRoute } from "../consts"
 
 export const APIAction = {
   FETCH_CHAT_LIST: 'chat/list',
@@ -72,80 +67,83 @@ export const deleteChatAction = createAsyncThunk<ChatItem[], {id: string}, {
   }
 );
 
-export const fetchOAuthConsentUrlAction = createAsyncThunk<ConsentUrl, Provider, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.FETCH_OAUTH_CONSENT_URL,
-  async({provider, redirect_uri}, {extra: api}) => {
-    const { data } = await api.get<ConsentUrl>(APIRoute.OAuthConsentUrl, {
-      params: { provider, redirect_uri }
-    });
-    return data;
-  }
-);
 
-export const fetchOAuthAction = createAsyncThunk<OAuthData, OAuth, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.FETCH_OAUTH,
-  async({provider, code, device_id, code_verifier, redirect_uri}, {extra: api}) => {
-    const { data } = await api.post<OAuthData>(APIRoute.OAuth, { provider, code, device_id, code_verifier, redirect_uri });
-    return data;
-  }
-);
+// АВТОРИЗАЦИЯ ЧЕРЕЗ API
 
-export const checkAuthAction = createAsyncThunk<User, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.CHECK_AUTH,
-  async (_arg, {extra: api}) => {
-    const { data } = await api.get<User>(APIRoute.Singin);
-    return data;
-  }
-);
+// export const fetchOAuthConsentUrlAction = createAsyncThunk<ConsentUrl, Provider, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.FETCH_OAUTH_CONSENT_URL,
+//   async({provider, redirect_uri}, {extra: api}) => {
+//     const { data } = await api.get<ConsentUrl>(APIRoute.OAuthConsentUrl, {
+//       params: { provider, redirect_uri }
+//     });
+//     return data;
+//   }
+// );
 
-export const singinAction = createAsyncThunk<User, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.SINGIN,
-  async ({email, password}, {dispatch, extra: api}) => {
-    const {  data } = await api.post<User>(APIRoute.Singin, {email, password});
-    // saveToken(token);
-    dispatch(redirectToRoute(AppRoute.Chat));
-    return data;
-  }
-);
+// export const fetchOAuthAction = createAsyncThunk<OAuthData, OAuth, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.FETCH_OAUTH,
+//   async({provider, code, device_id, code_verifier, redirect_uri}, {extra: api}) => {
+//     const { data } = await api.post<OAuthData>(APIRoute.OAuth, { provider, code, device_id, code_verifier, redirect_uri });
+//     return data;
+//   }
+// );
 
-export const singupAction = createAsyncThunk<User, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.SINGUP,
-  async ({email, password}, {dispatch, extra: api}) => {
-    const { data } = await api.post<User>(APIRoute.Singup, {email, password});
-    // saveToken(token);
-    dispatch(redirectToRoute(AppRoute.Chat));
-    return data;
-  }
-);
+// export const checkAuthAction = createAsyncThunk<User, undefined, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.CHECK_AUTH,
+//   async (_arg, {extra: api}) => {
+//     const { data } = await api.get<User>(APIRoute.Singin);
+//     return data;
+//   }
+// );
 
-export const exitAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  APIAction.EXIT,
-  async (_arg, {extra: api}) => {
-    await api.delete(APIRoute.Exit);
-    dropToken();
-  }
-);
+// export const singinAction = createAsyncThunk<User, AuthData, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.SINGIN,
+//   async ({email, password}, {dispatch, extra: api}) => {
+//     const {  data } = await api.post<User>(APIRoute.Singin, {email, password});
+//     // saveToken(token);
+//     dispatch(redirectToRoute(AppRoute.Chat));
+//     return data;
+//   }
+// );
+
+// export const singupAction = createAsyncThunk<User, AuthData, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.SINGUP,
+//   async ({email, password}, {dispatch, extra: api}) => {
+//     const { data } = await api.post<User>(APIRoute.Singup, {email, password});
+//     // saveToken(token);
+//     dispatch(redirectToRoute(AppRoute.Chat));
+//     return data;
+//   }
+// );
+
+// export const exitAction = createAsyncThunk<void, undefined, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+//   APIAction.EXIT,
+//   async (_arg, {extra: api}) => {
+//     await api.delete(APIRoute.Exit);
+//     dropToken();
+//   }
+// );

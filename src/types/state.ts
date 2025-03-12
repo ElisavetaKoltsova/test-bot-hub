@@ -1,7 +1,7 @@
 import { AuthorizationStatus } from "../consts";
 import { store } from "../store";
 import { ChatItem, MessagesResponse } from "./chat";
-import { User } from "./user-data";
+import { UserData } from "./user-data";
 
 export type ChatProcess = {
   chatItems: ChatItem[];
@@ -12,7 +12,7 @@ export type ChatProcess = {
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
-  user: User | null;
+  user: UserData | null;
   codeVerifier: string;
 }
 

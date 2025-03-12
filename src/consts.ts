@@ -1,3 +1,7 @@
+
+export const STORAGE_KEY = 'userData';
+export const AUTH_STATUS_KEY = 'authStatus';
+
 export enum AppRoute {
   Chat = '/',
   Login = '/login'

@@ -15,23 +15,21 @@ store.dispatch(fecthChatListAction());
 export default function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   console.log(authorizationStatus)
-
   return (
     <div className="app">
       <BrowserRouter>
         <Routes>
           <Route
-            path={AppRoute.Chat}
+            path="*"
             element={
-              // <PrivateRoute authorizationStatus={authorizationStatus}>
-              //   <ChatPage />
-              // </PrivateRoute>
-              <ChatPage />
+              <PrivateRoute authorizationStatus={authorizationStatus} />
             }
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage />}
+            element={
+              <PrivateRoute authorizationStatus={authorizationStatus} />
+            }
           />
         </Routes>
       </BrowserRouter>

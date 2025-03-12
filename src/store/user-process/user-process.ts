@@ -1,46 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserProcess } from '../../types/state';
-import { AuthorizationStatus, NameSpace } from '../../consts';
-import { checkAuthAction, exitAction, fetchOAuthConsentUrlAction, singinAction, singupAction } from '../api-actions';
+import { AUTH_STATUS_KEY, AuthorizationStatus, NameSpace, STORAGE_KEY } from '../../consts';
+import { UserData } from '../../types/user-data';
 
 const initialState: UserProcess = {
-  authorizationStatus: AuthorizationStatus.Unknown,
-  user: null,
+  authorizationStatus: 
+    (localStorage.getItem(AUTH_STATUS_KEY) as AuthorizationStatus) || AuthorizationStatus.Unknown,
+  user: JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'),
   codeVerifier: ''
 };
 
 export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder
-      .addCase(checkAuthAction.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.authorizationStatus = AuthorizationStatus.Auth;
-      })
-      .addCase(checkAuthAction.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(singinAction.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.authorizationStatus = AuthorizationStatus.Auth;
-      })
-      .addCase(singinAction.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(singupAction.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.authorizationStatus = AuthorizationStatus.Auth;
-      })
-      .addCase(singupAction.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(exitAction.fulfilled, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(fetchOAuthConsentUrlAction.fulfilled, (state, action) => {
-        state.codeVerifier = action.payload.code_verifier;
-      });
+  reducers: {
+    singinUser: (state, action: PayloadAction<UserData>) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(action.payload));
+      localStorage.setItem(AUTH_STATUS_KEY, AuthorizationStatus.Auth);
+    },
+    exitUser: (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.user = null;
+
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(AUTH_STATUS_KEY, AuthorizationStatus.NoAuth);
+    }
   }
 });
+
+export const { singinUser, exitUser } = userProcess.actions;
